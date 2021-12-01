@@ -25,8 +25,8 @@ export default function SearchResults() {
 
   return (
     <div className={styles.container}>
-      { isLoading && <LoadingSpinner/> }
-      { isResultsExist ? renderSearchResults() : <NoResults /> }
+      { isLoading ? <LoadingSpinner/> :
+      ( isResultsExist ? renderSearchResults() : <NoResults /> )}
     </div>
   )
 }
