@@ -1,4 +1,5 @@
 import styles from './searchResults.module.css'
+import React from 'react'
 import { useAppContext } from '../context/AppWrapper'
 import LoadingSpinner from './loadingSpinner'
 const NoResults = () => <div className={styles.noResults}>No Results</div>
@@ -7,7 +8,6 @@ export default function SearchResults() {
   const {searchResults, isLoading} = useAppContext()
   const renderSearchResults = () => {
     const results = []
-    console.log(searchResults)
     for (const i in searchResults){
       const { name, rating, people, price, currency } = searchResults[i]
       results.push(
@@ -25,8 +25,8 @@ export default function SearchResults() {
 
   return (
     <div className={styles.container}>
-      { isLoading ? <LoadingSpinner/> :
-      ( isResultsExist ? renderSearchResults() : <NoResults /> )}
+      { isResultsExist ? renderSearchResults() : <NoResults /> }
+      { isLoading && <LoadingSpinner/>}
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import React from 'react'
 import Head from 'next/head'
 import SearchTopBar from '../components/searchTopBar'
 import SearchResults from '../components/searchResults'

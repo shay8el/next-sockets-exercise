@@ -2,7 +2,7 @@
 export default function LoadingSpinner() {
   return (
     <>
-      <div class="lds-facebook"><div></div><div></div><div></div></div>
+      <div className="lds-facebook"><div></div><div></div><div></div></div>
       <style>{`
 .lds-facebook {
   display: inline-block;

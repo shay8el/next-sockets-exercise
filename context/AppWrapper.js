@@ -1,24 +1,29 @@
-import { createContext, useContext, useState } from 'react'
-import axios from 'axios'
+import React, { createContext, useContext, useState } from 'react'
+import io from 'socket.io-client'
 
 const AppContext = createContext()
-const URL = '/api/search'
+const URL = '/api/searchServer'
 export function AppWrapper({ children }) {
   const [searchResults, setSearchResults] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
   const sendSearchQuery = (data) => {
     setIsLoading(true)
-    axios.get(URL, {
-      params : data
-    }).then((response) => {
-      const {results} = response.data
-      setSearchResults(results)
-    }).catch((err) => {
-      console.error(err)
-    }).finally(()=>{
-      setIsLoading(false)
+    fetch(URL).finally(() => {
+      const socket = io()
+      socket.emit('search', data)
+      socket.on('results-batch', data => {
+        setSearchResults(data)
+      })
+      socket.on('found', () => {
+        setIsLoading(false)
+      })
+      socket.on('disconnect', () => {
+        setIsLoading(false)
+      })
     })
   }
+
   const clearSearchResults = () => {setSearchResults([])}
   const sharedState = { sendSearchQuery, searchResults, clearSearchResults, isLoading }
 
