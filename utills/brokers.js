@@ -57,6 +57,7 @@ export const BROKERS = [{
             for (const resultItem of accommodations){
                 resultsList.push({
                     name: resultItem?.HotelName,
+                    images: resultItem?.HotelDescriptiveContent?.Images || [],
                     rating: resultItem?.HotelInfo?.Rating,
                     people: resultItem?.HotelInfo?.Beds,
                     price: resultItem?.PricesInfo?.AmountAfterTax,

@@ -1,7 +1,8 @@
-import styles from './searchResults.module.css'
+import styles from './searchResults.module.scss'
 import React from 'react'
 import { useAppContext } from '../context/AppWrapper'
 import LoadingSpinner from './loadingSpinner'
+import ResultItem from './resultItem'
 const NoResults = () => <div className={styles.noResults}>No Results</div>
 
 export default function SearchResults() {
@@ -9,19 +10,11 @@ export default function SearchResults() {
   const renderSearchResults = () => {
     const results = []
     for (const i in searchResults){
-      const { name, rating, people, price, currency } = searchResults[i]
-      results.push(
-        <div key={i} className={styles.item}>
-          <h1>{name}</h1>
-          <p>{rating} stars</p>
-          <p>{people} people</p>
-          <p>{price}{currency}</p>
-        </div>
-      )
+      results.push(<ResultItem key={i} {...searchResults[i]} />)
     }
     return results
   }
-  const isResultsExist = searchResults && searchResults.length > 0
+  const isResultsExist = searchResults && searchResults.length > 0 && !isLoading
 
   return (
     <div className={styles.container}>

@@ -1,4 +1,4 @@
-import styles from './searchTopBar.module.css'
+import styles from './searchTopBar.module.scss'
 import React, { useReducer } from 'react'
 import { useAppContext } from '../context/AppWrapper'
 const DESTIONATIONS = ['Val Thorens','Courchevel','Tignes','La Plagne','Chamonix','Les Menuires',"L'alpes D'huez",'Les Deux Alpes']
@@ -9,12 +9,14 @@ const DEFAULTS = {
   startDate: today.toLocaleDateString(), 
   endDate: today.toLocaleDateString()
 }
-const formReducer = (state, event) => ({
-  ...state,
-  [event.name]: event.value
-})
+const formReducer = (state, event) => (
+  {
+    ...state,
+    [event.name]: event.value
+  }
+)
 
-export default function SearchTopBar(props) {
+export default function SearchTopBar() {
   const [formData, setFormData] = useReducer(formReducer, DEFAULTS);
 
   const { sendSearchQuery } = useAppContext()
@@ -24,7 +26,7 @@ export default function SearchTopBar(props) {
       value: event.target.value,
     });
   }
-  const onSearchClicked = (e) => {
+  const onSearchClicked = () => {
     // todo: validateQuery
     sendSearchQuery(formData)
   }
@@ -32,10 +34,10 @@ export default function SearchTopBar(props) {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        logo
+      <img src="/images/weski.png" alt="logo"/>
       </div>
       <div className={styles.inputs}>
-        <select className={styles.input} name="destination" onChange={handleChange} value={DEFAULTS.destination}>
+        <select className={styles.input} name="destination" onChange={handleChange} >
           {DESTIONATIONS.map((des) => <option key={des} value={des}>{des}</option>)}
         </select>
         <input className={styles.input} onChange={handleChange} name="people" type='number' min='1' max='10' value={formData.people || DEFAULTS.people} />
@@ -43,7 +45,7 @@ export default function SearchTopBar(props) {
         <input className={styles.input} onChange={handleChange} name="endDate" type='date' value={formData.endDate} />
       </div>
       <div className={styles.search} onClick={onSearchClicked}>
-        search
+        <img src="/images/search-icon.png" alt="logo"/>
       </div>
     </div>
   )
