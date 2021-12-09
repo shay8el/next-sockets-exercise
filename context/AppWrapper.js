@@ -1,27 +1,42 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react'
 import io from 'socket.io-client'
 
 const AppContext = createContext()
 const URL = '/api/searchServer'
 export function AppWrapper({ children }) {
+  const [searchSocket, setSearchSocket] = useState(null)
   const [searchResults, setSearchResults] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-
-  const sendSearchQuery = (data) => {
-    setIsLoading(true)
-    fetch(URL).finally(() => {
-      const socket = io()
-      socket.emit('search', data)
-      socket.on('results-batch', data => {
-        setSearchResults(data)
-      })
-      socket.on('found', () => {
-        setIsLoading(false)
-      })
-      socket.on('disconnect', () => {
-        setIsLoading(false)
-      })
+  useEffect(() => {
+    fetch(URL)
+    let socketIo = io()
+    socketIo.on('results-batch', data => {
+      setSearchResults(data)
     })
+    socketIo.on('found', () => {
+      setIsLoading(false)
+    })
+    socketIo.on('disconnect', () => {
+      setIsLoading(false)
+    })
+    setSearchSocket(socketIo)
+    function cleanup() {
+      socketIo.disconnect()
+    }
+    return cleanup
+  }, [])
+  const sendSearchQuery = (data) => {
+    clearSearchResults()
+    if (searchSocket){
+      if (isLoading){
+        console.log('cancel-previous-search')
+        searchSocket.emit('stop-search')
+      }
+      setIsLoading(true)
+      searchSocket.emit('search', data)
+    } else {
+      console.log('no searchSocket')
+    }
   }
 
   const clearSearchResults = () => {setSearchResults([])}

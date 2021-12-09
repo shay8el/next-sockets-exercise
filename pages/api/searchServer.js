@@ -8,10 +8,12 @@ const ioHandler = (req, res) => {
       const onResultFetch = (results) => socket.emit('results-batch', results)
       socket.on('search', async(data) => {
         const results = await search(data, onResultFetch)
-          socket.emit('found', results)
+        socket.emit('found', results)
+      })
+      socket.on('stop-search', async() => {
+        console.log('cancel-existing-search')
       })
     })
-
     res.socket.server.io = io
   } else {
     console.log('socket.io already running')
