@@ -2,7 +2,7 @@ import { BROKERS } from "../utills/brokers"
 import { formatRequestQuery } from '../utills/server'
 import axios from 'axios'
 
-const MAX_PEOPLE_COUNT_TO_SEARCH = 4
+const MAX_PEOPLE_COUNT_TO_SEARCH = 10
 
 export const search = async (data, callback) => {
     const results = []
