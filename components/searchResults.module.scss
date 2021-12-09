@@ -1,0 +1,18 @@
+.container {
+    max-width: 70%;
+    padding: 0 1rem;
+    margin: 3rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  @media (max-width: 1000px) {
+    .container {
+      max-width: 100%;
+    }
+  }
+  @media (min-width: 2000px) {
+    .container {
+      max-width: 50%;
+    }
+  }
