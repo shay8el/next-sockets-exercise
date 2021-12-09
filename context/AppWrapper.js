@@ -7,6 +7,7 @@ export function AppWrapper({ children }) {
   const [searchSocket, setSearchSocket] = useState(null)
   const [searchResults, setSearchResults] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
   useEffect(() => {
     fetch(URL)
     let socketIo = io()
@@ -25,6 +26,7 @@ export function AppWrapper({ children }) {
     }
     return cleanup
   }, [])
+
   const sendSearchQuery = (data) => {
     clearSearchResults()
     if (searchSocket){
