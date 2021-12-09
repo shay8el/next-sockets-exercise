@@ -14,11 +14,11 @@ export default function SearchResults() {
     }
     return results
   }
-  const isResultsExist = searchResults && searchResults.length > 0 && !isLoading
+  const isResultsExist =  searchResults && searchResults.length > 0
 
   return (
     <div className={styles.container}>
-      { isResultsExist ? renderSearchResults() : <NoResults /> }
+      { isResultsExist ? renderSearchResults() : (!isLoading && <NoResults />) }
       { isLoading && <LoadingSpinner/>}
     </div>
   )

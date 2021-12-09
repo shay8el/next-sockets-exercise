@@ -9,6 +9,9 @@ export default function Home() {
     <AppWrapper>
       <Head>
         <title>WeSki Search</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+        <link href="https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap" rel="stylesheet" />
       </Head>
       <SearchTopBar/>
       <SearchResults/>
@@ -18,9 +21,7 @@ export default function Home() {
           padding: 0;
           margin: 0;
           background-color: #f0f0f0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
+          font-family: 'Readex Pro', sans-serif;
         }
       `}</style>
     </AppWrapper>
